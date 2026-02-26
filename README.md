@@ -18,6 +18,18 @@ Die AWS-Infrastruktur wird mit [OpenTofu](https://opentofu.org) (Open-Source-Alt
 - einem SSH-Key-Pair
 - einer Security Group
 
+## Terraform State
+
+OpenTofu verwaltet alle angelegten AWS-Ressourcen über eine sogenannte **State-Datei** (`terraform.tfstate`). Darin steht, welche Ressourcen OpenTofu zuletzt angelegt hat. Ohne diese Datei hat OpenTofu kein Gedächtnis: Es weiß nicht, was bereits existiert, und würde bei jedem CI-Lauf versuchen, alles neu anzulegen — was zu Fehlern wie `InvalidKeyPair.Duplicate` führt.
+
+### Wo wird der State gespeichert?
+
+In diesem Projekt wird die State-Datei direkt im Repository gespeichert. Nach jedem `tofu apply` committet die CI die aktualisierte `terraform.tfstate` automatisch zurück ins Repo (Commit-Nachricht: `[skip ci]`, damit kein weiterer CI-Lauf ausgelöst wird).
+
+### Alternativen
+
+Die professionelle Lösung wäre ein **S3-Backend**: Die State-Datei liegt dann in einem AWS S3-Bucket und ist für alle CI-Läufe zentral erreichbar. Für ein einfaches Lernprojekt ist die Git-Variante jedoch ausreichend.
+
 ## Voraussetzungen
 
 Damit die CI funktioniert, müssen in den GitHub-Repository-Einstellungen unter *Settings → Secrets and variables → Actions* folgende Secrets hinterlegt sein:
