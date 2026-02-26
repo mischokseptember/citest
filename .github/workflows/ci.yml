@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Repository auschecken
@@ -33,8 +35,15 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           tofu init
-          tofu destroy -auto-approve
           tofu apply -auto-approve
+
+      - name: State-Datei speichern
+        run: |
+          git config user.email "ci@github"
+          git config user.name "GitHub CI"
+          git add terraform.tfstate
+          git commit -m "Terraform State aktualisiert [skip ci]" || true
+          git push
 
 # Möglichkeiten für jetzt:
 # 1. Automatische Amazon-Server-Mietung einrichten (aus
