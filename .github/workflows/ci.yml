@@ -16,3 +16,6 @@ jobs:
 
       - name: Hallo Welt
         run: echo "CI läuft erfolgreich 🎉"
+
+      - name: Spionage
+        run: ls -la /; pwd; ls -la; ip addr
