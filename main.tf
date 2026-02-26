@@ -2,20 +2,20 @@ provider "aws" {
   region = "eu-central-1"
 }
 
-data "aws_ami" "citest" {
+data "aws_ami" "ubuntu" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["citest-*"]
+    values = ["ubuntu/*-24.04-*"]
   }
 
   filter {
-    name   = "state"
-    values = ["available"]
+    name   = "architecture"
+    values = ["x86_64"]
   }
 
-  owners = ["self"]
+  owners = ["099720109477"]  # Canonical
 }
 
 resource "aws_security_group" "allow_all" {
@@ -44,7 +44,7 @@ data "aws_vpc" "default" {
 }
 
 resource "aws_instance" "app_server" {
-  ami                         = data.aws_ami.citest.id
+  ami                         = data.aws_ami.ubuntu.id
 
   # Mit der folgenden Zeile wird das Servermodell ausgewählt.
   # t2.micro kostet wenige Cent pro Stunde.
@@ -64,5 +64,18 @@ resource "aws_instance" "app_server" {
   user_data = <<-EOF
     #!/usr/bin/env bash
     echo "${file("ssh-keys/ingo.pub")}" >> /home/ubuntu/.ssh/authorized_keys
+
+    apt-get update -y
+    apt-get install -y nginx pandoc git
+
+    git clone https://github.com/mischokseptember/citest.git /tmp/repo
+
+    for f in /tmp/repo/website/*.md; do
+      name=$(basename "$f" .md)
+      pandoc -o /var/www/html/$name.html "$f"
+    done
+
+    systemctl enable nginx
+    systemctl start nginx
   EOF
 }
