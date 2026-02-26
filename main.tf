@@ -64,5 +64,20 @@ resource "aws_instance" "app_server" {
   user_data = <<-EOF
     #!/usr/bin/env bash
     echo "${file("ssh-keys/ingo.pub")}" >> /home/ubuntu/.ssh/authorized_keys
+
+    apt-get update -y
+    apt-get install -y nginx pandoc git
+
+    git clone https://github.com/mischokseptember/citest.git /tmp/repo
+
+    for f in /tmp/repo/website/*.md; do
+      name=$(basename "$f" .md)
+      pandoc -o /var/www/html/$name.html "$f"
+    done
+
+    systemctl enable nginx
+    systemctl start nginx
   EOF
+
+  user_data_replace_on_change = true
 }
