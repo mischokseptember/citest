@@ -65,6 +65,4 @@ resource "aws_instance" "app_server" {
     #!/usr/bin/env bash
     echo "${file("ssh-keys/ingo.pub")}" >> /home/ubuntu/.ssh/authorized_keys
   EOF
-
-  user_data_replace_on_change = true
 }
