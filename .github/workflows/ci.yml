@@ -19,3 +19,27 @@ jobs:
 
       - name: Spionage
         run: ls -la /; pwd; ls -la; ip addr
+
+      - name: Handybenachrichtigung
+        run: curl -s -d katze https://ntfy.sh/mischok-citest
+
+# 1. Fragen
+# 2. Diese Datei durchgehen
+# 3. Etwas Interessanteres mit der CI anstellen
+
+# CI in eins zwei Sätzen erklärt:
+# Unter CI versteht man, dass bei jedem Push
+# Code seiner Wahl auf den Servern von GitHub
+# ausgeführt wird. Meist soll dieser Code
+# eine bestimmte Aufgabe erfüllen, die mit
+# dem Repository zusammenhängt, zum Beispiel:
+# - Alten Amazon-Server verschrotten und neuen
+#   mieten, und darin den Inhalt des
+#   Repositories installieren
+# - Java-Quellcode zu einer fertigen
+#   Android-APK-Datei übersetzen und auf
+#   die eigene Website stellen, damit alle
+#   Interessierten die neueste Version der
+#   Handy-App herunterladen können
+# - Vorher angelegte automatische Tests
+#   durchlaufen lassen
