@@ -21,7 +21,8 @@ jobs:
         run: ls -la /; pwd; ls -la; ip addr
 
       - name: Handybenachrichtigung
-        run: curl -s -d "Grüße von der CI. Aktuelle Uhrzeit: date" https://ntfy.sh/mischok-citest
+        run: |
+          curl -s -d "Grüße von der CI. Aktuelle Uhrzeit: $(date)" https://ntfy.sh/mischok-citest
 
 # 1. Fragen
 # 2. Diese Datei durchgehen
