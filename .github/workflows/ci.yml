@@ -23,7 +23,19 @@ jobs:
       - name: Handybenachrichtigung
         run: |
           curl -s -d "Grüße von der CI. Aktuelle Uhrzeit: $(date)" https://ntfy.sh/mischok-citest
-          curl -s -d "Und noch ein zweiter Gruß: $(ip addr)" https://ntfy.sh/mischok-citest
+
+      - name: Amazon-Server mieten
+        run: |
+          tofu init
+          tofu apply
+
+# Möglichkeiten für jetzt:
+# 1. Automatische Amazon-Server-Mietung einrichten (aus
+#    der CI heraus)
+# 2. Irgendwas anderes zum Thema CI machen (z.B. eine
+#    schlichte Website erstellen)
+# 3. Etwas ganz anderes, nicht zum Thema CI
+# 4. Stille
 
 # 1. Fragen
 # 2. Diese Datei durchgehen
