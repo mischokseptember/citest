@@ -35,6 +35,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           tofu init
+          tofu destroy -auto-approve
           tofu apply -auto-approve
 
       - name: State-Datei speichern
