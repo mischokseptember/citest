@@ -24,10 +24,13 @@ jobs:
         run: |
           curl -s -d "Grüße von der CI. Aktuelle Uhrzeit: $(date)" https://ntfy.sh/mischok-citest
 
+      - name: OpenTofu installieren
+        uses: opentofu/setup-opentofu@v1
+
       - name: Amazon-Server mieten
         run: |
           tofu init
-          tofu apply
+          tofu apply -auto-approve
 
 # Möglichkeiten für jetzt:
 # 1. Automatische Amazon-Server-Mietung einrichten (aus
