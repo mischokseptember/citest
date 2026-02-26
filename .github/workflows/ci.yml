@@ -28,6 +28,9 @@ jobs:
         uses: opentofu/setup-opentofu@v1
 
       - name: Amazon-Server mieten
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           tofu init
           tofu apply -auto-approve
