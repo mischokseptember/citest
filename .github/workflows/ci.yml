@@ -22,10 +22,6 @@ jobs:
       - name: Spionage
         run: ls -la /; pwd; ls -la; ip addr
 
-      - name: Handybenachrichtigung
-        run: |
-          curl -s -d "Grüße von der CI. Aktuelle Uhrzeit: $(date)" https://ntfy.sh/mischok-citest
-
       - name: OpenTofu installieren
         uses: opentofu/setup-opentofu@v1
 
@@ -37,6 +33,14 @@ jobs:
           tofu init
           tofu destroy -auto-approve  # alten Server zerstören
           tofu apply -auto-approve    # neuen Server mieten
+
+      - name: Handybenachrichtigung
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          PUBLIC_IP=$(tofu output -raw public_ip)
+          curl -s -d "Server bereit. IP: $PUBLIC_IP – Uhrzeit: $(date)" https://ntfy.sh/mischok-citest
 
       - name: State-Datei speichern
         run: |

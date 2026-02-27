@@ -77,5 +77,9 @@ resource "aws_instance" "app_server" {
   EOF
 }
 
+output "public_ip" {
+  value = aws_instance.app_server.public_ip
+}
+
 # Wie kommen die HTML-Dateien aus dem Git-Repository in den Server?
 # Mit git clone!
