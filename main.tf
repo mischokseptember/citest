@@ -65,7 +65,7 @@ resource "aws_instance" "app_server" {
   user_data = <<-EOF
     #!/usr/bin/env bash
     echo "${file("ssh-keys/ingo.pub")}" >> /home/ubuntu/.ssh/authorized_keys
-    apt install nginx
+    apt -y install nginx
     # Was hier noch fehlt: HTML-Dateien an der richtigen Stelle, nämlich
     # /var/www/html, platzieren.
   EOF
