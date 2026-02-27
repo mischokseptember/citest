@@ -64,9 +64,18 @@ resource "aws_instance" "app_server" {
   # Skript, das beim ersten Serverstart ausgeführt wird
   user_data = <<-EOF
     #!/usr/bin/env bash
+
+    # Öffentliches SSH-Schloss hinterlegen, um passwortlosen SSH-Zugang zu ermöglichen
     echo "${file("ssh-keys/ingo.pub")}" >> /home/ubuntu/.ssh/authorized_keys
+
+    # Websiteauslieferungsapp installieren
     apt -y install nginx
-    # Was hier noch fehlt: HTML-Dateien an der richtigen Stelle, nämlich
-    # /var/www/html, platzieren.
+
+    # HTML-Dateien an der richtigen Stelle, nämlich /var/www/html, platzieren.
+    git clone https://github.com/mischokseptember/citest.git /tmp/citest
+    cp -vr /tmp/citest/website-inhalt/* /var/www/html/
   EOF
 }
+
+# Wie kommen die HTML-Dateien aus dem Git-Repository in den Server?
+# Mit git clone!
