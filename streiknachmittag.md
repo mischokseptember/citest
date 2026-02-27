@@ -14,11 +14,18 @@
   Repository
 
 
+## Wichtiges modernes SI-Prinzip
+
+"Behandle Server nicht wie Haustiere, sondern wie Vieh", das heißt:
+
+- Server nicht über Monate hinweg mühevoll einrichten.
+- Sondern um automatische Bereitstellung kümmern. Server ganz nach Bedarf
+  zerstören oder erschaffen.
+
+
+
 ## Schmierzettel
 
 ```
-# Websiteauslieferungsapp nginx installieren
-apt install nginx
-
 # Dann den Ordner /var/www/html mit dem gewünschten Inhalt befüllen
 ```
