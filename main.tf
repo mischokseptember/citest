@@ -73,7 +73,7 @@ resource "aws_instance" "app_server" {
 
     # HTML-Dateien an der richtigen Stelle, nämlich /var/www/html, platzieren.
     git clone https://github.com/mischokseptember/citest.git /tmp/citest
-    cp -vr /tmp/citest/website-inhalt/* /var/www/html/
+    cp -vr /tmp/citest/websiteinhalt/* /var/www/html/
   EOF
 }
 
